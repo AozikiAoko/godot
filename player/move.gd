@@ -81,7 +81,7 @@ func roll_state():
 	
 
 
-func _on_hurtboxes_area_entered(area):
+func _on_hurtboxes_area_entered(_area):
 	stat.health-=5
 	Hurtbox.start_invicibility(0.5)
 	Hurtbox.creat_hit_effect()

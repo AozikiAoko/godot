@@ -9,6 +9,6 @@ func Grass_Effect():
 	
 
 
-func _on_hurtboxes_area_entered(area):#检测到hurtbox有东西进入就执行
+func _on_hurtboxes_area_entered(_area):#检测到hurtbox有东西进入就执行
 	Grass_Effect()
 	queue_free()

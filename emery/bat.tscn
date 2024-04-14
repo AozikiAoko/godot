@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://di6es71f5v3y7"]
+[gd_scene load_steps=19 format=3 uid="uid://di6es71f5v3y7"]
 
 [ext_resource type="Script" path="res://emery/bat.gd" id="1_3ak31"]
 [ext_resource type="Texture2D" uid="uid://bmn650jgoxpck" path="res://Action RPG Resources/Action RPG Resources/Enemies/Bat.png" id="1_yi7v4"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://pmaf7l4fxrnp" path="res://stats/bat_ststs.tscn" id="6_yegik"]
 [ext_resource type="PackedScene" uid="uid://dy6c1gl5hl6mu" path="res://Hitboxes and Hurtboxes/Hitboxes.tscn" id="8_lm57c"]
 [ext_resource type="PackedScene" uid="uid://b1u70gnan8x2m" path="res://Hitboxes and Hurtboxes/soft_collision.tscn" id="8_r23g5"]
+[ext_resource type="PackedScene" uid="uid://8wtkck6jvufa" path="res://emery/wander_controler.tscn" id="9_yfm8r"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_v3owp"]
 radius = 5.0
@@ -106,6 +107,8 @@ shape = SubResource("CircleShape2D_fuor2")
 disabled = false
 
 [node name="SoftCollision" parent="." instance=ExtResource("8_r23g5")]
+
+[node name="WanderControler" parent="." instance=ExtResource("9_yfm8r")]
 
 [connection signal="area_entered" from="Hurtboxes" to="." method="_on_hurtboxes_area_entered"]
 [connection signal="none_health" from="Bat_Ststs" to="." method="_on_bat_ststs_none_health"]
