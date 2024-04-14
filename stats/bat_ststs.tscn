@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://pmaf7l4fxrnp"]
+
+[ext_resource type="PackedScene" uid="uid://bbvd6c5uerl1r" path="res://stats/stats.tscn" id="1_xfmly"]
+[ext_resource type="Script" path="res://stats/bat_ststs.gd" id="2_fc34c"]
+
+[node name="Bat_Ststs" instance=ExtResource("1_xfmly")]
+script = ExtResource("2_fc34c")
+max_health = 10.0

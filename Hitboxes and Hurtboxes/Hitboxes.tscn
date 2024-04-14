@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dy6c1gl5hl6mu"]
+
+[ext_resource type="Script" path="res://Hitboxes and Hurtboxes/ATKvalue.gd" id="1_vay1b"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pmsxh"]
+
+[node name="Hitboxes" type="Area2D"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_vay1b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_pmsxh")
+disabled = true
