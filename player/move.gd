@@ -11,12 +11,16 @@ enum {
 	ROLL,
 	ATTACK
 }#枚举常量列出三种状态
+
+const Player_Hurt_Sound=preload("res://player/player_hurt_sound.tscn")
+
 var state=MOVE
 @onready var Animation_Tree=$AnimationTree
-@onready var Animation_State=Animation_Tree.get("parameters/playback")#获取状态
+@onready var Animation_State=Animation_Tree.get("parameters/playback")#获取动作状态
 @onready var disable=$HitboxPivot/Hitboxes/CollisionShape2D
 @onready var Hitbox=$HitboxPivot/Hitboxes
 @onready var Hurtbox=$Hurtboxes
+@onready var blinkPlayer=$BlinkAnimationPlayer
 
 func _ready():
 	stat.connect("none_health",Callable(queue_free))
@@ -86,4 +90,16 @@ func _on_hurtboxes_area_entered(_area):
 	Hurtbox.start_invicibility(0.5)
 	Hurtbox.creat_hit_effect()
 	
+	#受击音效
+	var player_hurt_sound=Player_Hurt_Sound.instantiate()#实例化
+	get_tree().current_scene.add_child(player_hurt_sound)#创建子节点
+	
 
+
+
+func _on_hurtboxes_invincibility_started():#在无敌帧期间闪烁
+	blinkPlayer.play(("Start"))
+
+
+func _on_hurtboxes_invincibility_ended():
+	blinkPlayer.play("Stop")

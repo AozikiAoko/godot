@@ -13,6 +13,7 @@ var dirction = Vector2.ZERO#这个是获取运动方向的
 @onready var Hurtbox=$Hurtboxes
 @onready var softCollision=$SoftCollision
 @onready var wandercontroler=$WanderControler
+@onready var blink_shader=$BlinkAnimationPlayer
 
 
 enum {
@@ -80,6 +81,7 @@ func _on_hurtboxes_area_entered(area):
 	dirction = area.knock_back#获取来自角色攻击的方向
 	dirction=dirction.normalized()*BACKSPEED#赋予击退初速度
 	Hurtbox.creat_hit_effect()
+	Hurtbox.start_invicibility(0.4)#设置无敌帧
 
 
 func _on_bat_ststs_none_health():#设置死亡状态
@@ -102,3 +104,11 @@ func Move_to_Taget(delta,taget_position):#向着某个方向移动
 	
 	
 	
+
+
+func _on_hurtboxes_invincibility_started():#设置闪烁效果
+	blink_shader.play("start")
+
+
+func _on_hurtboxes_invincibility_ended():
+	blink_shader.play("stop")

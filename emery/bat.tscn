@@ -1,9 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://di6es71f5v3y7"]
+[gd_scene load_steps=25 format=3 uid="uid://di6es71f5v3y7"]
 
 [ext_resource type="Script" path="res://emery/bat.gd" id="1_3ak31"]
 [ext_resource type="Texture2D" uid="uid://bmn650jgoxpck" path="res://Action RPG Resources/Action RPG Resources/Enemies/Bat.png" id="1_yi7v4"]
 [ext_resource type="PackedScene" uid="uid://bclqeicgiout3" path="res://emery/player_direction_zone.tscn" id="2_k3i5t"]
 [ext_resource type="Texture2D" uid="uid://jut6pe8ineug" path="res://Action RPG Resources/Action RPG Resources/Shadows/SmallShadow.png" id="2_up3lh"]
+[ext_resource type="Shader" path="res://Effect/BlinkShader.gdshader" id="2_xepm3"]
 [ext_resource type="PackedScene" uid="uid://cj6rfw2cxhi0t" path="res://Hitboxes and Hurtboxes/Hurtboxes.tscn" id="3_p8re0"]
 [ext_resource type="PackedScene" uid="uid://pmaf7l4fxrnp" path="res://stats/bat_ststs.tscn" id="6_yegik"]
 [ext_resource type="PackedScene" uid="uid://dy6c1gl5hl6mu" path="res://Hitboxes and Hurtboxes/Hitboxes.tscn" id="8_lm57c"]
@@ -11,7 +12,12 @@
 [ext_resource type="PackedScene" uid="uid://8wtkck6jvufa" path="res://emery/wander_controler.tscn" id="9_yfm8r"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_v3owp"]
-radius = 5.0
+radius = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_coxmb"]
+resource_local_to_scene = true
+shader = ExtResource("2_xepm3")
+shader_parameter/active = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ooyn4"]
 atlas = ExtResource("1_yi7v4")
@@ -61,7 +67,62 @@ radius = 8.0
 height = 24.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fuor2"]
-radius = 9.0
+radius = 5.0
+
+[sub_resource type="Animation" id="Animation_l4bo4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_v7sdl"]
+resource_name = "start"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_vmge1"]
+resource_name = "stop"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_awb8b"]
+_data = {
+"RESET": SubResource("Animation_l4bo4"),
+"start": SubResource("Animation_v7sdl"),
+"stop": SubResource("Animation_vmge1")
+}
 
 [node name="Bat" type="CharacterBody2D"]
 z_index = 1
@@ -69,11 +130,11 @@ collision_layer = 16
 script = ExtResource("1_3ak31")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_v3owp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_coxmb")
 sprite_frames = SubResource("SpriteFrames_32avo")
 animation = &"Fly"
 autoplay = "Fly"
@@ -101,7 +162,6 @@ visible = false
 collision_layer = 4
 
 [node name="CollisionShape2D" parent="Hitboxes" index="0"]
-visible = false
 position = Vector2(0, -14)
 shape = SubResource("CircleShape2D_fuor2")
 disabled = false
@@ -110,7 +170,14 @@ disabled = false
 
 [node name="WanderControler" parent="." instance=ExtResource("9_yfm8r")]
 
+[node name="BlinkAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_awb8b")
+}
+
 [connection signal="area_entered" from="Hurtboxes" to="." method="_on_hurtboxes_area_entered"]
+[connection signal="invincibility_ended" from="Hurtboxes" to="." method="_on_hurtboxes_invincibility_ended"]
+[connection signal="invincibility_started" from="Hurtboxes" to="." method="_on_hurtboxes_invincibility_started"]
 [connection signal="none_health" from="Bat_Ststs" to="." method="_on_bat_ststs_none_health"]
 
 [editable path="Hurtboxes"]
