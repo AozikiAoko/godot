@@ -21,6 +21,7 @@ var state=MOVE
 @onready var Hitbox=$HitboxPivot/Hitboxes
 @onready var Hurtbox=$Hurtboxes
 @onready var blinkPlayer=$BlinkAnimationPlayer
+@onready var timer=$Timer
 
 func _ready():
 	stat.connect("none_health",Callable(queue_free))
@@ -83,11 +84,12 @@ func roll_state():
 	Animation_State.travel("roll")
 	move()
 	
+	
 
 
-func _on_hurtboxes_area_entered(_area):
-	stat.health-=5
-	Hurtbox.start_invicibility(0.5)
+func _on_hurtboxes_area_entered(area):
+	stat.health-=area.AttackDamage
+	Hurtbox.start_invicibility(0.5)#受伤时无敌帧
 	Hurtbox.creat_hit_effect()
 	
 	#受击音效
@@ -103,3 +105,5 @@ func _on_hurtboxes_invincibility_started():#在无敌帧期间闪烁
 
 func _on_hurtboxes_invincibility_ended():
 	blinkPlayer.play("Stop")
+
+

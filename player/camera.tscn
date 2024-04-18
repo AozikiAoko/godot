@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6xbjrnsg5pv0"]
+
+[ext_resource type="Script" path="res://player/camera.gd" id="1_m4md8"]
+
+[node name="Camera2D2" type="Camera2D"]
+position = Vector2(578, 325)
+editor_draw_limits = true
+script = ExtResource("1_m4md8")
+
+[node name="limited" type="Node" parent="."]
+
+[node name="buttomRight" type="Marker2D" parent="limited"]
+position = Vector2(1152, 648)
+gizmo_extents = 78.5
+
+[node name="topLeft" type="Marker2D" parent="limited"]
+gizmo_extents = 78.5

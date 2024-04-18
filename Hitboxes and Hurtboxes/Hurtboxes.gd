@@ -4,6 +4,7 @@ extends Area2D
 const hit=preload("res://Effect/hit_effect.tscn")#载入受击特效
 
 @onready var timer=$Timer
+@onready var collision=$CollisionShape2D
 
 signal invincibility_started
 signal invincibility_ended
@@ -36,9 +37,9 @@ func _on_timer_timeout():#无敌帧结束
 	invincible=false
 
 
-func _on_invincibility_started():#禁止检测mask
-	set_deferred("monitorable",false)#这里使用物理更新就要用这个方法，原理是异步调用
+func _on_invincibility_started():#禁止伤害检测
+	collision.set_deferred("disabled",true)#这里使用物理更新就要用这个方法，原理是异步调用
 
 
-func _on_invincibility_ended():#重新允许检测mask
-	monitorable=true
+func _on_invincibility_ended():#重新允许检测伤害
+	collision.disabled=false

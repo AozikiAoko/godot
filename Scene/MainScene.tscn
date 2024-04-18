@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://3pv7i3710f3v"]
+[gd_scene load_steps=20 format=3 uid="uid://3pv7i3710f3v"]
 
 [ext_resource type="PackedScene" uid="uid://b60sd34ihv81t" path="res://player/player.tscn" id="1_8prny"]
+[ext_resource type="PackedScene" uid="uid://b6xbjrnsg5pv0" path="res://player/camera.tscn" id="1_gnk1l"]
 [ext_resource type="Texture2D" uid="uid://vq04gfijwxro" path="res://Action RPG Resources/Action RPG Resources/World/GrassBackground.png" id="1_q0bvw"]
 [ext_resource type="Texture2D" uid="uid://d0f6k7hdgiit8" path="res://Action RPG Resources/Action RPG Resources/World/DirtTileset.png" id="2_pjjnx"]
 [ext_resource type="PackedScene" uid="uid://cyxyo0niump4w" path="res://plants/bush.tscn" id="3_7ybq2"]
@@ -9,6 +10,12 @@
 [ext_resource type="PackedScene" uid="uid://di6es71f5v3y7" path="res://emery/bat.tscn" id="6_lli6m"]
 [ext_resource type="PackedScene" uid="uid://ejm7md81ts7w" path="res://UI/player_ui.tscn" id="8_le63a"]
 [ext_resource type="PackedScene" uid="uid://bc8djb5foxl2r" path="res://plants/tree.tscn" id="9_hspek"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l5l23"]
+size = Vector2(20, 906.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mjl88"]
+size = Vector2(1207.5, 20)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3d07e"]
 texture = ExtResource("1_q0bvw")
@@ -2346,8 +2353,28 @@ sources/0 = SubResource("TileSetAtlasSource_haqpa")
 [node name="world" type="Node2D"]
 z_index = -1
 
-[node name="Camera2D2" type="Camera2D" parent="."]
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(-332, 430)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+position = Vector2(88, -41.75)
+shape = SubResource("RectangleShape2D_l5l23")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2(-490, 347)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
+position = Vector2(842.25, -424)
+shape = SubResource("RectangleShape2D_mjl88")
+
+[node name="Camera2D2" parent="." instance=ExtResource("1_gnk1l")]
 position = Vector2(234, 30)
+
+[node name="buttomRight" parent="Camera2D2/limited" index="0"]
+position = Vector2(958, 835)
+
+[node name="topLeft" parent="Camera2D2/limited" index="1"]
+position = Vector2(-231, -66)
 
 [node name="Ground" type="TileMap" parent="."]
 position = Vector2(88, 78)
@@ -2796,8 +2823,24 @@ offset_bottom = 0.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="StaticBody2D" parent="." instance=ExtResource("9_hspek")]
+[node name="tree1" parent="." instance=ExtResource("9_hspek")]
 position = Vector2(567, 450)
 
-[node name="StaticBody2D2" parent="." instance=ExtResource("9_hspek")]
+[node name="tree2" parent="." instance=ExtResource("9_hspek")]
 position = Vector2(888, 2)
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="."]
+position = Vector2(879, 429)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D5"]
+position = Vector2(88, -41.75)
+shape = SubResource("RectangleShape2D_l5l23")
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="."]
+position = Vector2(-482, 1271)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D6"]
+position = Vector2(842.25, -424)
+shape = SubResource("RectangleShape2D_mjl88")
+
+[editable path="Camera2D2"]
