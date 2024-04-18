@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Rpg Demo"
-run/main_scene="res://Scene/MainScene.tscn"
+run/main_scene="res://Scene/start_scene.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
